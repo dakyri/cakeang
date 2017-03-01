@@ -1,0 +1,7 @@
+<ul>
+    <li *ngFor="let cake of cakes">
+        <a href="#" [routerLink]="['/cake', cake.id]">{{cake.name}}<br/>
+            <img src="{{cake.imageUrl}}" width="300"/></a></li>
+    <button (click)="gotoAddCake()">Go to add cake</button>
+
+</ul>
