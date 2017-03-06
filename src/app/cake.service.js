@@ -14,6 +14,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 require('rxjs/add/operator/map');
+var cake_1 = require('./cake');
 var mockData = [
     { name: 'Carrot', id: '1', comment: 'Healthy!', imageUrl: '', yumFactor: 3.1 },
     { name: 'Banana', id: '2', comment: 'Mouldy!', imageUrl: '', yumFactor: 3.2 }
@@ -56,6 +57,12 @@ var CakeService = (function () {
             return id;
         }
      */
+    CakeService.prototype.mapCakes = function (response) {
+        return response.json().map(cake_1.Cake.from);
+    };
+    CakeService.prototype.mapCake = function (response) {
+        return cake_1.Cake.from(response.json());
+    };
     CakeService.prototype.getAll = function () {
         var cake$ = this.http
             .get(this.baseUrl + "/cakes", { headers: this.getHeaders() })
@@ -67,39 +74,6 @@ var CakeService = (function () {
             .get(this.baseUrl + "/cakes/" + id, { headers: this.getHeaders() })
             .map(this.mapCake);
         return cake$;
-    };
-    CakeService.prototype.toCake = function (r) {
-        var cake = ({
-            id: r.id,
-            name: r.name,
-            comment: r.comment,
-            imageUrl: r.imageUrl,
-            yumFactor: r.yumFactor,
-        });
-        return cake;
-    };
-    CakeService.prototype.mapCakes = function (response) {
-        return response.json().map(function (r) {
-            var cake = ({
-                id: r.id,
-                name: r.name,
-                comment: r.comment,
-                imageUrl: r.imageUrl,
-                yumFactor: r.yumFactor,
-            });
-            return cake;
-        });
-    };
-    CakeService.prototype.mapCake = function (response) {
-        var r = response.json();
-        var cake = ({
-            id: r.id,
-            name: r.name,
-            comment: r.comment,
-            imageUrl: r.imageUrl,
-            yumFactor: r.yumFactor,
-        });
-        return cake;
     };
     CakeService.prototype.save = function (cake) {
         return this.http

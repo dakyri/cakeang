@@ -53,6 +53,14 @@ export class CakeService {
     }
  */
 
+    mapCakes(response:Response): Cake[]{
+         return response.json().map(Cake.from);
+    }
+
+    mapCake(response:Response): Cake {
+        return Cake.from(response.json());
+    }
+
     getAll(): Observable<Cake[]> {
         let cake$ = this.http
             .get(`${this.baseUrl}/cakes`, {headers: this.getHeaders()})
@@ -65,42 +73,6 @@ export class CakeService {
             .get(`${this.baseUrl}/cakes/${id}`, {headers: this.getHeaders()})
             .map(this.mapCake);
         return cake$;
-    }
-
-    toCake(r:any): Cake {
-        let cake = <Cake>({
-            id: r.id,
-            name: r.name,
-            comment: r.comment,
-            imageUrl: r.imageUrl,
-            yumFactor: r.yumFactor,
-        });
-        return cake;
-    }
-
-    mapCakes(response:Response): Cake[]{
-        return response.json().map(r  => {
-            let cake = <Cake>({
-                id: r.id,
-                name: r.name,
-                comment: r.comment,
-                imageUrl: r.imageUrl,
-                yumFactor: r.yumFactor,
-            });
-            return cake;
-        })
-    }
-
-    mapCake(response:Response): Cake {
-        let r = response.json();
-        let cake = <Cake>({
-            id: r.id,
-            name: r.name,
-            comment: r.comment,
-            imageUrl: r.imageUrl,
-            yumFactor: r.yumFactor,
-        });
-        return cake;
     }
 
     save(cake: Cake) : Observable<Response> {

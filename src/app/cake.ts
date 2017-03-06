@@ -8,5 +8,16 @@ export class Cake {
     comment: string;
     imageUrl: string;
     yumFactor: number;
+
+    static from(r:any): Cake {
+        let cake = <Cake>({
+            id: r.id,
+            name: r.name,
+            comment: r.comment,
+            imageUrl: r.imageUrl,
+            yumFactor: r.yumFactor,
+        });
+        return cake;
+    }
 }
 
